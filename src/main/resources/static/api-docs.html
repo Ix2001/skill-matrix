@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Matrix API Documentation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #7f8c8d;
+            margin-top: 20px;
+        }
+        .endpoint {
+            background: #ecf0f1;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        .method {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        .url {
+            font-family: monospace;
+            background: #2c3e50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        .description {
+            margin-top: 10px;
+            color: #555;
+        }
+        .auth-info {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #27ae60;
+        }
+        .roles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .role {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #f39c12;
+        }
+        .role-name {
+            font-weight: bold;
+            color: #e67e22;
+        }
+        .example {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #9b59b6;
+        }
+        .code {
+            font-family: monospace;
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+        .note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Skill Matrix API Documentation</h1>
+        
+        <div class="auth-info">
+            <h3>🔐 Аутентификация</h3>
+            <p><strong>Тип:</strong> JWT Bearer Token</p>
+            <p><strong>Заголовок:</strong> <code>Authorization: Bearer &lt;your-jwt-token&gt;</code></p>
+            <p><strong>Получение токена:</strong> Используйте <code>POST /api/auth/login</code></p>
+        </div>
+
+        <h2>👥 Роли пользователей</h2>
+        <div class="roles">
+            <div class="role">
+                <div class="role-name">ADMIN</div>
+                <p>Полный доступ ко всем функциям системы</p>
+            </div>
+            <div class="role">
+                <div class="role-name">MODERATOR</div>
+                <p>Доступ ко всем функциям, кроме удаления пользователей</p>
+            </div>
+            <div class="role">
+                <div class="role-name">USER</div>
+                <p>Доступ только к своим данным и просмотру категорий/навыков</p>
+            </div>
+        </div>
+
+        <h2>🔑 Аутентификация</h2>
+        <div class="endpoint">
+            <div class="method">POST</div>
+            <div class="url">/api/auth/register</div>
+            <div class="description">Регистрация нового пользователя</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">POST</div>
+            <div class="url">/api/auth/login</div>
+            <div class="description">Авторизация пользователя</div>
+        </div>
+
+        <h2>👤 Пользователи</h2>
+        <div class="endpoint">
+            <div class="method">GET</div>
+            <div class="url">/api/users</div>
+            <div class="description">Получить всех пользователей (ADMIN/MODERATOR)</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">GET</div>
+            <div class="url">/api/users/{id}</div>
+            <div class="description">Получить пользователя по ID</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">POST</div>
+            <div class="url">/api/users</div>
+            <div class="description">Создать пользователя (ADMIN/MODERATOR)</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">PUT</div>
+            <div class="url">/api/users/{id}</div>
+            <div class="description">Обновить пользователя</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">DELETE</div>
+            <div class="url">/api/users/{id}</div>
+            <div class="description">Удалить пользователя (ADMIN)</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">GET</div>
+            <div class="url">/api/users/{id}/skills</div>
+            <div class="description">Получить навыки пользователя</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">PUT</div>
+            <div class="url">/api/users/{userId}/skills/{skillId}</div>
+            <div class="description">Обновить баллы навыка (ADMIN/MODERATOR)</div>
+        </div>
+
+        <h2>📂 Категории</h2>
+        <div class="endpoint">
+            <div class="method">GET</div>
+            <div class="url">/api/categories</div>
+            <div class="description">Получить все категории</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">GET</div>
+            <div class="url">/api/categories/{id}</div>
+            <div class="description">Получить категорию по ID</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">POST</div>
+            <div class="url">/api/categories</div>
+            <div class="description">Создать категорию (ADMIN/MODERATOR)</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">PUT</div>
+            <div class="url">/api/categories/{id}</div>
+            <div class="description">Обновить категорию (ADMIN/MODERATOR)</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">DELETE</div>
+            <div class="url">/api/categories/{id}</div>
+            <div class="description">Удалить категорию (ADMIN/MODERATOR)</div>
+        </div>
+
+        <h2>💡 Навыки</h2>
+        <div class="endpoint">
+            <div class="method">GET</div>
+            <div class="url">/api/skills</div>
+            <div class="description">Получить все навыки</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">GET</div>
+            <div class="url">/api/skills/{id}</div>
+            <div class="description">Получить навык по ID</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">GET</div>
+            <div class="url">/api/skills/category/{categoryId}</div>
+            <div class="description">Получить навыки по категории</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">POST</div>
+            <div class="url">/api/skills</div>
+            <div class="description">Создать навык (ADMIN/MODERATOR)</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">PUT</div>
+            <div class="url">/api/skills/{id}</div>
+            <div class="description">Обновить навык (ADMIN/MODERATOR)</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">DELETE</div>
+            <div class="url">/api/skills/{id}</div>
+            <div class="description">Удалить навык (ADMIN/MODERATOR)</div>
+        </div>
+
+        <h2>👔 Должности</h2>
+        <div class="endpoint">
+            <div class="method">GET</div>
+            <div class="url">/api/positions</div>
+            <div class="description">Получить все должности</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">GET</div>
+            <div class="url">/api/positions/{id}</div>
+            <div class="description">Получить должность по ID</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">POST</div>
+            <div class="url">/api/positions</div>
+            <div class="description">Создать должность (ADMIN/MODERATOR)</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">PUT</div>
+            <div class="url">/api/positions/{id}</div>
+            <div class="description">Обновить должность (ADMIN/MODERATOR)</div>
+        </div>
+        <div class="endpoint">
+            <div class="method">DELETE</div>
+            <div class="url">/api/positions/{id}</div>
+            <div class="description">Удалить должность (ADMIN/MODERATOR)</div>
+        </div>
+
+        <h2>📝 Примеры использования</h2>
+        
+        <div class="example">
+            <h3>Авторизация</h3>
+            <p><strong>URL:</strong> <code>POST /api/auth/login</code></p>
+            <p><strong>Тело запроса:</strong></p>
+            <div class="code">
+{
+  "username": "admin",
+  "password": "password"
+}
+            </div>
+            <p><strong>Ответ:</strong></p>
+            <div class="code">
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "username": "admin",
+  "role": "ADMIN"
+}
+            </div>
+        </div>
+
+        <div class="example">
+            <h3>Создание пользователя</h3>
+            <p><strong>URL:</strong> <code>POST /api/users</code></p>
+            <p><strong>Заголовки:</strong> <code>Authorization: Bearer &lt;token&gt;</code></p>
+            <p><strong>Тело запроса:</strong></p>
+            <div class="code">
+{
+  "username": "newuser",
+  "email": "user@example.com",
+  "firstName": "Иван",
+  "lastName": "Иванов",
+  "direction": "Разработка",
+  "currentPosition": "Junior Developer"
+}
+            </div>
+        </div>
+
+        <div class="note">
+            <strong>Примечание:</strong> Все тестовые пользователи создаются с паролем "password" по умолчанию.
+        </div>
+
+        <h2>🔧 Тестовые данные</h2>
+        <p>После запуска приложения в системе будут созданы следующие пользователи:</p>
+        <ul>
+            <li><strong>admin</strong> / password (ADMIN)</li>
+            <li><strong>moderator</strong> / password (MODERATOR)</li>
+            <li><strong>user1</strong> / password (USER)</li>
+            <li><strong>user2</strong> / password (USER)</li>
+        </ul>
+
+        <div class="note">
+            <strong>Важно:</strong> Для продакшена обязательно измените пароли и JWT секрет!
+        </div>
+    </div>
+</body>
+</html>

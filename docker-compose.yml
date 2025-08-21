@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5433/skill_matrix
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1234
+      - JWT_SECRET=VnEB7+q18COYa1rj1zaKknWzNsJFPM+6VXRWCReA1Ag=
+      - JWT_EXPIRATION=86400000
+    depends_on:
+      - db
+    networks:
+      - skill-matrix-network
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=skill_matrix
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - skill-matrix-network
+
+volumes:
+  postgres_data:
+
+networks:
+  skill-matrix-network:
+    driver: bridge
