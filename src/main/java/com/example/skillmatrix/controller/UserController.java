@@ -64,7 +64,7 @@ public class UserController {
     }
     
     @PutMapping("/{userId}/skills/{skillId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "Обновить навык пользователя", description = "Обновить баллы за конкретный навык пользователя")
     public ResponseEntity<UserSkillDto> updateUserSkill(
             @PathVariable Long userId,
